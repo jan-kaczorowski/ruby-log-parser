@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Prepared by: Jan Kaczorowski <jan.kaczorowski@gmail.com>
+
+require 'rubygems'
+require 'bundler/setup'
+
+Bundler.require(:default)
+
+APP_TITLE = 'Log Parser Demo'
+
+puts Artii::Base.new.asciify(APP_TITLE).red
+
+Dir[File.dirname(__FILE__) + '/app/**/*.rb'].sort.each do |file|
+  puts 'loading file:'.purple + file
+  require file
+end
+
+if __FILE__ == $PROGRAM_NAME
+  LogFileParser.new(ARGV[0]).call
+else
+  alert('This script must be called directly')
+end
